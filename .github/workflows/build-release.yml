@@ -114,6 +114,8 @@ jobs:
         echo "DEVICE_TARGET=$DEVICE_TARGET" >> $GITHUB_ENV
         DEVICE_SUBTARGET=$(cat .config | grep CONFIG_TARGET_SUBTARGET | awk -F '"' '{print $2}')
         echo "DEVICE_SUBTARGET=$DEVICE_SUBTARGET" >> $GITHUB_ENV
+        latest_release="$(curl -s https://github.com/openwrt/openwrt/tags | grep -Eo "v[0-9\.]+\-*r*c*[0-9]*.tar.gz" | sed -n '/[2-9][4-9]/p' | sed -n 1p | sed 's/.tar.gz//g' | sed 's/v//g')"
+        echo "latest_release=${latest_release}" >>$GITHUB_ENV
         
     - name: Install Feeds
       run: |
@@ -148,18 +150,6 @@ jobs:
         cd $OPENWRT_PATH
         $GITHUB_WORKSPACE/$DIY_SCRIPT
         
-    - name: Set default LAN IP
-      run: |
-        cd $OPENWRT_PATH
-        SET_IP=${{ github.event.inputs.LAN_IP }}
-        if [[ $SET_IP =~ ^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$ ]]; then
-            #修改默认IP地址
-            sed -i "s/192\.168\.[0-9]*\.[0-9]*/$SET_IP/g" package/base-files/files/bin/config_generate
-            echo "Set LAN IP Address: $SET_IP"
-        else
-            echo "Invalid IP address, use default."
-        fi
-        
     - name: Download DL Package
       run: |
         cd $OPENWRT_PATH
@@ -178,7 +168,7 @@ jobs:
         [ -s IP_ADDR ] && echo "IP_ADDR=$(cat IP_ADDR)" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
         echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
-        echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
+        echo "FILE_DATE=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
         echo "TAG_TIME=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
         
     - name: Check Space Usage
@@ -254,9 +244,9 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE == 'true'
       uses: ncipollo/release-action@v1.14.0
       with:
-        name: ${{ env.TAG_TIME }}-${{ env.FIRMWARE_TAG }}
+        name: ${{ env.FILE_DATE }}-${{ env.FIRMWARE_TAG }}--${{ env.latest_release }}
         allowUpdates: true
-        tag: ${{ env.FIRMWARE_TAG }}
+        tag: ${{ env.TAG_TIME }}-${{ env.latest_release }}
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
