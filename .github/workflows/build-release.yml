@@ -244,7 +244,7 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE == 'true'
       uses: ncipollo/release-action@v1.14.0
       with:
-        name: ${{ env.FILE_DATE }}-${{ env.FIRMWARE_TAG }}--${{ env.latest_release }}
+        name: ${{ env.FILE_DATE }}-${{ env.FIRMWARE_TAG }}-${{ env.latest_release }}
         allowUpdates: true
         tag: ${{ env.TAG_TIME }}-${{ env.latest_release }}
         token: ${{ secrets.GITHUB_TOKEN }}
