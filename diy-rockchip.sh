@@ -7,7 +7,7 @@
 export mirror=https://script.kejizero.online
 
 # 私有Gitea
-export gitea=https://git.kejizero.online
+export gitea=git.kejizero.online/zhao
 
 # GitHub镜像
 export github="github.com"
@@ -178,16 +178,16 @@ curl -s $mirror/openwrt/patch/firewall4/nftables/0002-nftables-add-brcm-fullcone
 curl -s $mirror/openwrt/patch/firewall4/nftables/0003-drop-rej-file.patch > package/network/utils/nftables/patches/0003-drop-rej-file.patch
 
 # FullCone module
-git clone https://$github/oppen321/nft-fullcone package/new/nft-fullcone
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/nft-fullcone package/new/nft-fullcone
 
 # IPv6 NAT
-git clone https://$github/oppen321/package_new_nat6 package/new/nat6
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/package_new_nat6 package/new/nat6
 
 # natflow
-git clone https://$github/oppen321/package_new_natflow package/new/natflow
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/package_new_natflow package/new/natflow
 
 # sfe
-git clone https://github.com/oppen321/shortcut-fe package/new/shortcut-fe
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/shortcut-fe package/new/shortcut-fe
 
 # Patch Luci add nft_fullcone/bcm_fullcone & shortcut-fe & natflow & ipv6-nat & custom nft command option
 pushd feeds/luci
@@ -219,18 +219,17 @@ curl -s $mirroropenwrt/patch/other/691-net-ipv6-fix-UDPv6-GSO-segmentation-with-
 
 # Docker
 rm -rf feeds/luci/applications/luci-app-dockerman
-git clone https://$github/oppen321/luci-app-dockerman -b main feeds/luci/applications/luci-app-dockerman
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/luci-app-dockerman -b openwrt-24.10 feeds/luci/applications/luci-app-dockerman
     rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
-    git clone $gitea/zhao/packages_utils_docker feeds/packages/utils/docker
-    git clone $gitea/zhao/packages_utils_dockerd feeds/packages/utils/dockerd
-    git clone $gitea/zhao/packages_utils_containerd feeds/packages/utils/containerd
-    git clone $gitea/zhao/packages_utils_runc feeds/packages/utils/runc
+    git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_utils_docker feeds/packages/utils/docker
+    git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_utils_dockerd feeds/packages/utils/dockerd
+    git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_utils_containerd feeds/packages/utils/containerd
+    git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_utils_runc feeds/packages/utils/runc
     sed -i '/cgroupfs-mount/d' feeds/packages/utils/dockerd/Config.in
 sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
 pushd feeds/packages
     curl -s $mirror/openwrt/patch/docker/0001-dockerd-fix-bridge-network.patch | patch -p1
     curl -s $mirror/openwrt/patch/docker/0002-docker-add-buildkit-experimental-support.patch | patch -p1
-    curl -s $mirror/openwrt/patch/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
 popd
 
 # TTYD
@@ -241,8 +240,8 @@ sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' feeds/packages/ut
 
 # UPnP
 rm -rf feeds/{packages/net/miniupnpd,luci/applications/luci-app-upnp}
-git clone $gitea/zhao/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
-git clone $gitea/zhao/luci-app-upnp feeds/luci/applications/luci-app-upnp -b master
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/luci-app-upnp feeds/luci/applications/luci-app-upnp -b master
 
 # profile
 sed -i 's#\\u@\\h:\\w\\\$#\\[\\e[32;1m\\][\\u@\\h\\[\\e[0m\\] \\[\\033[01;34m\\]\\W\\[\\033[00m\\]\\[\\e[32;1m\\]]\\[\\e[0m\\]\\\$#g' package/base-files/files/etc/profile
@@ -313,7 +312,7 @@ sed -i "/BUILD_ID/aBUILD_DATE=\"$CURRENT_DATE\"" package/base-files/files/usr/li
 
 # golang 1.24
 rm -rf feeds/packages/lang/golang
-git clone https://$github/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_lang_golang -b 24.x feeds/packages/lang/golang
 
 # luci-app-webdav
 git clone https://$github/sbwml/luci-app-webdav package/new/luci-app-webdav
@@ -369,7 +368,7 @@ git clone https://$github/sbwml/feeds_packages_net_aria2 -b 22.03 feeds/packages
 
 # SSRP & Passwall
 rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
-git clone https://$github/sbwml/openwrt_helloworld package/new/helloworld -b v5
+git clone git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/openwrt_helloworld package/new/helloworld -b openwrt-24.10
 
 # alist
 rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
@@ -381,11 +380,15 @@ sed -i 's/syslog/none/g' feeds/packages/admin/netdata/files/netdata.conf
 # Mosdns
 git clone https://$github/sbwml/luci-app-mosdns -b v5 package/new/mosdns
 
+# luci-app-sqm
+rm -rf feeds/luci/applications/luci-app-sqm
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/luci-app-sqm feeds/luci/applications/luci-app-sqm
+
 # OpenAppFilter
 git clone https://$github/sbwml/OpenAppFilter --depth=1 package/new/OpenAppFilter
 
 # adguardhome
-git clone --depth=1 -b lua https://github.com/sirpdboy/luci-app-adguardhome package/new/luci-app-adguardhome
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/luci-app-adguardhome package/new/luci-app-adguardhome
 
 # nlbwmon
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
@@ -412,11 +415,10 @@ sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank
 git clone https://github.com/gdy666/luci-app-lucky.git package/new/lucky
 
 # pkgs
-git clone https://github.com/sbwml/openwrt_pkgs package/new/openwrt_pkgs
-rm -rf package/new/openwrt_pkgs/luci-app-adguardhome
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/openwrt-package package/new/openwrt-package
 
 # autocore-arm
-git clone https://github.com/sbwml/autocore-arm package/new/autocore-arm
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/autocore-arm package/new/autocore-arm
 
 # 使用特定的优化
 sed -i 's,-mcpu=generic,-march=armv8-a+crc+crypto,g' include/target.mk
