@@ -219,7 +219,7 @@ git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/luci-app-dockerman -b 
     rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
     git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_utils_docker feeds/packages/utils/docker
     git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_utils_dockerd feeds/packages/utils/dockerd
-    git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/zhao/packages_utils_containerd feeds/packages/utils/containerd
+    git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_utils_containerd feeds/packages/utils/containerd
     git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/packages_utils_runc feeds/packages/utils/runc
     sed -i '/cgroupfs-mount/d' feeds/packages/utils/dockerd/Config.in
 sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
@@ -277,26 +277,9 @@ sed -i 's/2.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' package/base-files/f
 sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/files/bin/config_generate
 
 # 版本设置
-cat << 'EOF' >> feeds/luci/modules/luci-mod-status/ucode/template/admin_status/index.ut
-<script>
-function addLinks() {
-    var section = document.querySelector(".cbi-section");
-    if (section) {
-        var links = document.createElement('div');
-        links.innerHTML = '<div class="table"><div class="tr"><div class="td left" width="33%"><a href="https://qm.qq.com/q/JbBVnkjzKa" target="_blank">QQ交流群</a></div><div class="td left" width="33%"><a href="https://t.me/kejizero" target="_blank">TG交流群</a></div><div class="td left"><a href="https://openwrt.kejizero.online" target="_blank">固件地址</a></div></div></div>';
-        section.appendChild(links);
-    } else {
-        setTimeout(addLinks, 100); // 继续等待 `.cbi-section` 加载
-    }
-}
-
-document.addEventListener("DOMContentLoaded", addLinks);
-</script>
-EOF
-
 # 加入作者信息
-sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='ZeroWrt-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
-sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By OPPEN321'/g" package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWrt-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By grandway'/g" package/base-files/files/etc/openwrt_release
 
 # CURRENT_DATE
 sed -i "/BUILD_DATE/d" package/base-files/files/usr/lib/os-release
@@ -415,14 +398,13 @@ sed -i "s/bing/none/g" package/new/luci-app-argon-config/root/etc/config/argon
 sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://www.kejizero.online" target="_blank">探索无限</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
 sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/zhiern/OpenWRT" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
 sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://www.kejizero.online" target="_blank">探索无限</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
-sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/zhiern/OpenWRT" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/zouchanggan/OpenWRT-24.10-Action" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 
 # lucky
 git clone https://github.com/gdy666/luci-app-lucky.git package/new/lucky
 
 # pkgs
-git clone https://github.com/sbwml/openwrt_pkgs package/new/openwrt_pkgs
-rm -rf package/new/openwrt_pkgs/luci-app-adguardhome
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/openwrt-package package/new/openwrt-package
 
 # autocore-arm
 git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/autocore-arm package/new/autocore-arm
