@@ -56,7 +56,7 @@ sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-st
 sed -i "s/192.168.1.1/$LAN/g" package/base-files/files/bin/config_generate
 
 # 修改名称
-sed -i 's/OpenWrt/ZeroWrt/' package/base-files/files/bin/config_generate
+# sed -i 's/OpenWrt/ZeroWrt/' package/base-files/files/bin/config_generate
 
 # banner
 curl -s $mirror/Customize/base-files/banner > package/base-files/files/etc/banner
@@ -275,27 +275,9 @@ sed -i 's/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g' package/base-files/files/bin
 sed -i 's/2.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' package/base-files/files/bin/config_generate
 sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/files/bin/config_generate
 
-# 版本设置
-cat << 'EOF' >> feeds/luci/modules/luci-mod-status/ucode/template/admin_status/index.ut
-<script>
-function addLinks() {
-    var section = document.querySelector(".cbi-section");
-    if (section) {
-        var links = document.createElement('div');
-        links.innerHTML = '<div class="table"><div class="tr"><div class="td left" width="33%"><a href="https://qm.qq.com/q/JbBVnkjzKa" target="_blank">QQ交流群</a></div><div class="td left" width="33%"><a href="https://t.me/kejizero" target="_blank">TG交流群</a></div><div class="td left"><a href="https://openwrt.kejizero.online" target="_blank">固件地址</a></div></div></div>';
-        section.appendChild(links);
-    } else {
-        setTimeout(addLinks, 100); // 继续等待 `.cbi-section` 加载
-    }
-}
-
-document.addEventListener("DOMContentLoaded", addLinks);
-</script>
-EOF
-
 # 加入作者信息
-sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='ZeroWrt-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
-sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By OPPEN321'/g" package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWrt-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By grandway'/g" package/base-files/files/etc/openwrt_release
 
 # CURRENT_DATE
 sed -i "/BUILD_DATE/d" package/base-files/files/usr/lib/os-release
@@ -380,6 +362,20 @@ git clone https://$github/sbwml/OpenAppFilter --depth=1 package/new/OpenAppFilte
 
 # adguardhome
 git clone https://zhao:zj3753813@$gitea/luci-app-adguardhome package/new/luci-app-adguardhome
+mkdir -p files/usr/bin
+AGH_CORE=$(curl -sL https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/latest | grep /AdGuardHome_linux_amd64 | awk -F '"' '{print $4}')
+wget -qO- $AGH_CORE | tar xOvz > files/usr/bin/AdGuardHome
+chmod +x files/usr/bin/AdGuardHome
+
+# openclash
+mkdir -p files/etc/openclash/core
+CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64.tar.gz"
+GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
+GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
+wget -qO- $CLASH_META_URL | tar xOvz > files/etc/openclash/core/clash_meta
+wget -qO- $GEOIP_URL > files/etc/openclash/GeoIP.dat
+wget -qO- $GEOSITE_URL > files/etc/openclash/GeoSite.dat
+chmod +x files/etc/openclash/core/clash*
 
 # nlbwmon
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
@@ -397,10 +393,10 @@ git clone https://github.com/jerrykuku/luci-app-argon-config.git package/new/luc
 sed -i "s/bing/none/g" package/new/luci-app-argon-config/root/etc/config/argon
 
 # 主题设置
-sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://www.kejizero.online" target="_blank">探索无限</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/zhiern/OpenWRT" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://www.kejizero.online" target="_blank">探索无限</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
-sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/zhiern/OpenWRT" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+# sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://www.kejizero.online" target="_blank">探索无限</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
+# sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/zhiern/OpenWRT" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
+# sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://www.kejizero.online" target="_blank">探索无限</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+# sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/zouchanggan/OpenWRT" target="_blank">OpenWrt</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 
 # lucky
 git clone https://github.com/gdy666/luci-app-lucky.git package/new/lucky
