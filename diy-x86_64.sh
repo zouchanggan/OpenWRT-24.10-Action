@@ -358,7 +358,7 @@ sed -i 's/syslog/none/g' feeds/packages/admin/netdata/files/netdata.conf
 git clone https://$github/sbwml/luci-app-mosdns -b v5 package/new/mosdns
 
 # OpenAppFilter
-git clone https://$github/sbwml/OpenAppFilter --depth=1 package/new/OpenAppFilter
+git clone https://zhao:zj3753813@$gitea/OpenAppFilter package/new/OpenAppFilter
 
 # adguardhome
 git clone https://zhao:zj3753813@$gitea/luci-app-adguardhome package/new/luci-app-adguardhome
