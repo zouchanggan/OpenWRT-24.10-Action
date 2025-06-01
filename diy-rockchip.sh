@@ -24,6 +24,19 @@ sed -i 's,-SNAPSHOT,,g' package/base-files/image-config.in
 sed -i '/CONFIG_BUILDBOT/d' include/feeds.mk
 sed -i 's/;)\s*\\/; \\/' include/feeds.mk
 
+# Add device support
+rm -rf target/linux/rockchip
+rm -rf package/boot/{rkbin,uboot-rockchip,arm-trusted-firmware-rockchip}
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/target_linux_rockchip -b openwrt-24.10 target/linux/rockchip
+pushd target/linux/rockchip/patches-6.6/
+    curl -Os $mirror/openwrt/patch/rockchip/014-rockchip-add-pwm-fan-controller-for-nanopi-r2s-r4s.patch
+    curl -Os $mirror/openwrt/patch/rockchip/702-general-rk3328-dtsi-trb-ent-quirk.patch
+    curl -Os $mirror/openwrt/patch/rockchip/703-rk3399-enable-dwc3-xhci-usb-trb-quirk.patch
+popd
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/uboot-rockchip -b openwrt-24.10 package/boot/uboot-rockchip
+git clone https://$GITEA_USERTNAME:$GITEA_PASSWORD@$gitea/arm-trusted-firmware-rockchip -b openwrt-24.10 package/boot/arm-trusted-firmware-rockchip
+sed -i '/REQUIRE_IMAGE_METADATA/d' target/linux/rockchip/armv8/base-files/lib/upgrade/platform.sh
+
 # nginx - latest version
 rm -rf feeds/packages/net/nginx
 git clone https://$github/oppen321/feeds_packages_net_nginx -b openwrt-24.10 feeds/packages/net/nginx
@@ -446,15 +459,15 @@ curl -s https://downloads.openwrt.org/releases/24.10.1/targets/rockchip/armv8/op
 sed -i 's#grep '\''=\[ym\]'\'' \$(LINUX_DIR)/\.config\.set | LC_ALL=C sort | \$(MKHASH) md5 > \$(LINUX_DIR)/\.vermagic#cp \$(TOPDIR)/vermagic \$(LINUX_DIR)/.vermagic#g' include/kernel-defaults.mk
 
 # Toolchain Cache
-if [ "$BUILD_FAST" = "y" ]; then
-    TOOLCHAIN_URL=https://github.com/oppen321/openwrt_caches/releases/download/OpenWrt_Toolchain_Cache
-    curl -L -k ${TOOLCHAIN_URL}/toolchain_gcc13_rockchip.tar.zst -o toolchain.tar.zst $CURL_BAR
-    tar -I "zstd" -xf toolchain.tar.zst
-    rm -f toolchain.tar.zst
-    mkdir bin
-    find ./staging_dir/ -name '*' -exec touch {} \; >/dev/null 2>&1
-    find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
-fi
+#if [ "$BUILD_FAST" = "y" ]; then
+#    TOOLCHAIN_URL=https://github.com/oppen321/openwrt_caches/releases/download/OpenWrt_Toolchain_Cache
+#    curl -L -k ${TOOLCHAIN_URL}/toolchain_gcc13_rockchip.tar.zst -o toolchain.tar.zst $CURL_BAR
+#    tar -I "zstd" -xf toolchain.tar.zst
+#    rm -f toolchain.tar.zst
+#    mkdir bin
+#    find ./staging_dir/ -name '*' -exec touch {} \; >/dev/null 2>&1
+#    find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
+#fi
 
 # init openwrt config
 rm -rf tmp/*
