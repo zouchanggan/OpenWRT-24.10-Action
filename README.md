@@ -2,14 +2,15 @@
 
 ![GitHub Header](date/openwrt.png)
 
-**基于 [OpenWrt](https://github.com/openwrt/openwrt) 打造的高效固件，覆盖 Rockchip、X86_64、Mediatek、Qualcommax 平台，专为进阶用户设计！**
+**基于 [OpenWrt](https://github.com/openwrt/openwrt) 打造的高效固件，覆盖 Rockchip、X86_64、Mediatek、Qualcommax 平台，专为进阶用户设计！**  
 
 </div>
 
 ---
 
-## 🔍 固件信息概览
+I18N: [English](README_EN.md) | [简体中文](README.md) 
 
+## 🔍 固件信息概览 
 - 🛠 **源码基础**：[OpenWrt 官方]
   - Rockchip、X86_64、ARMv8：基于 [OpenWrt 官方](https://github.com/openwrt/openwrt)
   - Mediatek：基于 [Padavanonly](https://github.com/padavanonly/immortalwrt-mt798x-24.10)
@@ -35,7 +36,7 @@
 
 ## 💾 ZeroWrt 固件烧写（SD）
 
-**推荐工具：**<a href="https://www.balena.io/etcher/" target="_blank" ><img style="height:25px;" src="https://git.kejizero.online/zhao/files/raw/branch/main/images/balena.svg" /></a>
+**推荐工具：**<a href="https://www.balena.io/etcher/" target="_blank" ><img style="height:25px;" src="date/balenaether.svg" /></a>
 
 **SD卡容量：2GB 或更多**
 
@@ -49,9 +50,9 @@
 
 - **电脑（Windows），其它操作系统自行搜索相关工具**
 - **数据线：USB-A to USB-A 或 Type-C to USB-A**
-- **瑞芯微开发工具：**<a href="https://git.kejizero.online/zhao/files/raw/branch/main/RKDevTool_Release_v2.84.zip" target="_blank" >RKDevTool_Release_v2.84.zip</a>
+- **瑞芯微开发工具：**<a href="https://github.com/zhiern/OpenWRT/raw/refs/heads/openwrt-24.10/date/RKDevTool_Release_v2.84.zip" target="_blank" >RKDevTool_Release_v2.84.zip</a>
 
-- **Mask 设备驱动：**<a href="https://git.kejizero.online/zhao/files/src/branch/main/DriverAssitant_v5.1.1.zip" target="_blank" >DriverAssitant_v5.1.1.zip</a>
+- **Mask 设备驱动：**<a href="https://github.com/zhiern/OpenWRT/raw/refs/heads/openwrt-24.10/date/DriverAssitant_v5.1.1.zip" target="_blank" >DriverAssitant_v5.1.1.zip</a>
 
 ### 📥 准备固件
 
@@ -63,7 +64,7 @@
 
 - **Mask 模式连接电脑（R5S 断电状态下，取下 SD 卡，使用数据线连接电脑。长按 “Mask” 按钮，接通 R5S 电源直至电脑发现新设备后释放 “Mask” 按钮）**
 
-  <img style="height:100px;" src="https://git.kejizero.online/zhao/files/raw/branch/main/images/r5s_mask.webp" />
+  <img style="height:100px;" src="date/r5s.webp" />
 
 
 
@@ -73,7 +74,7 @@
   
   **① 点击 “system” 路径选择按钮（选择 zip 解压出来的 IMG 文件）**
   
-  <img src="https://cdn.cooluc.com/r4s/select_firmware.png" />
+  <img src="date/select_firmware.png" />
   
   
   
@@ -81,7 +82,7 @@
   
   
   
-- ***注意：通过电脑烧写固件请使用本站下载的 [瑞芯微开发工具](https://git.kejizero.online/zhao/files/raw/branch/main/RKDevTool_Release_v2.84.zip)。***
+- ***注意：通过电脑烧写固件请使用本站下载的 [瑞芯微开发工具](https://github.com/zhiern/OpenWRT/raw/refs/heads/openwrt-24.10/date/RKDevTool_Release_v2.84.zip)。***
 
 ------
 
