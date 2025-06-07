@@ -171,7 +171,7 @@ curl -s $mirror/openwrt/patch/firewall4/nftables/0002-nftables-add-brcm-fullcone
 curl -s $mirror/openwrt/patch/firewall4/nftables/0003-drop-rej-file.patch > package/network/utils/nftables/patches/0003-drop-rej-file.patch
 
 # FullCone module
-git clone https://$github/oppen321/nft-fullcone package/new/nft-fullcone
+git clone https://$github/grandway2025/nft-fullcone package/new/nft-fullcone
 
 # IPv6 NAT
 git clone https://$github/sbwml/package_new_nat6 package/new/nat6
@@ -180,7 +180,7 @@ git clone https://$github/sbwml/package_new_nat6 package/new/nat6
 git clone https://$github/sbwml/package_new_natflow package/new/natflow
 
 # sfe
-git clone https://$github/oppen321/shortcut-fe package/new/shortcut-fe
+git clone https://$github/grandway2025/shortcut-fe package/new/shortcut-fe
 
 # Patch Luci add nft_fullcone/bcm_fullcone & shortcut-fe & natflow & ipv6-nat & custom nft command option
 pushd feeds/luci
@@ -275,6 +275,8 @@ sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/f
 # 加入作者信息
 sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWrt-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
 sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By grandway2025'/g" package/base-files/files/etc/openwrt_release
+sed -i 's|^OPENWRT_RELEASE=".*"|OPENWRT_RELEASE="OpenWrt 定制版 @R250607 BY grandway2025"|' package/base-files/files/usr/lib/os-release
+
 
 # CURRENT_DATE
 sed -i "/BUILD_DATE/d" package/base-files/files/usr/lib/os-release
@@ -358,7 +360,7 @@ git clone https://$github/sbwml/luci-app-mosdns -b v5 package/new/mosdns
 git clone https://$github/destan19/OpenAppFilter package/new/OpenAppFilter
 
 # adguardhome
-git clone https://$github/kenzok78/luci-app-adguardhome package/new/luci-app-adguardhome
+git clone https://$github/grandway2025/luci-app-adguardhome package/new/luci-app-adguardhome
 mkdir -p files/usr/bin
 AGH_CORE=$(curl -sL https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/latest | grep /AdGuardHome_linux_amd64 | awk -F '"' '{print $4}')
 wget -qO- $AGH_CORE | tar xOvz > files/usr/bin/AdGuardHome
@@ -390,10 +392,10 @@ git clone https://github.com/jerrykuku/luci-app-argon-config.git package/new/luc
 sed -i "s/bing/none/g" package/new/luci-app-argon-config/root/etc/config/argon
 
 # 主题设置
-# sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://github.com/grandway2025/OpenWRT-Action" target="_blank">OpenWrt定制版</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-# sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/grandway2025/OpenWRT-Action" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-# sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://github.com/grandway2025/OpenWRT-Action" target="_blank">OpenWrt定制版</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
-# sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/grandway2025/OpenWRT-Action" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://github.com/grandway2025/OpenWRT-Action" target="_blank">OpenWrt定制版</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
+sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/grandway2025" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer.htm
+sed -i 's#<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %> (<%= ver.luciversion %>)</a> /#<a class="luci-link" href="https://github.com/grandway2025/OpenWRT-Action" target="_blank">OpenWrt定制版</a> /#' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+sed -i 's|<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a>|<a href="https://github.com/grandway2025" target="_blank">OpenWRT</a> |g' package/new/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 
 # lucky
 git clone https://$github/gdy666/luci-app-lucky.git package/new/lucky
