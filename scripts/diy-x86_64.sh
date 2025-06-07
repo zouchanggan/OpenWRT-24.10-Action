@@ -171,16 +171,16 @@ curl -s $mirror/openwrt/patch/firewall4/nftables/0002-nftables-add-brcm-fullcone
 curl -s $mirror/openwrt/patch/firewall4/nftables/0003-drop-rej-file.patch > package/network/utils/nftables/patches/0003-drop-rej-file.patch
 
 # FullCone module
-git clone https://$github/grandway2025/nft-fullcone package/new/nft-fullcone
+git clone https://$github/sbwml/nft-fullcone package/new/nft-fullcone
 
 # IPv6 NAT
-git clone https://$github/grandway2025/package_new_nat6 package/new/nat6
+git clone https://$github/sbwml/package_new_nat6 package/new/nat6
 
 # natflow
-git clone https://$github/grandway2025/package_new_natflow package/new/natflow
+git clone https://$github/sbwml/package_new_natflow package/new/natflow
 
 # sfe
-git clone https://$github/grandway2025/shortcut-fe package/new/shortcut-fe
+git clone https://$github/oppen321/shortcut-fe package/new/shortcut-fe
 
 # Patch Luci add nft_fullcone/bcm_fullcone & shortcut-fe & natflow & ipv6-nat & custom nft command option
 pushd feeds/luci
@@ -212,12 +212,12 @@ curl -s $mirroropenwrt/patch/other/691-net-ipv6-fix-UDPv6-GSO-segmentation-with-
 
 # Docker
 rm -rf feeds/luci/applications/luci-app-dockerman
-git clone https://$github/grandway2025/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
+git clone https://$github/sbwml/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
     rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
-    git clone https://$github/grandway2025/packages_utils_docker feeds/packages/utils/docker
-    git clone https://$github/grandway2025/packages_utils_dockerd feeds/packages/utils/dockerd
-    git clone https://$github/grandway2025/packages_utils_containerd feeds/packages/utils/containerd
-    git clone https://$github/grandway2025/packages_utils_runc feeds/packages/utils/runc
+    git clone https://$github/sbwml/packages_utils_docker feeds/packages/utils/docker
+    git clone https://$github/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
+    git clone https://$github/sbwml/packages_utils_containerd feeds/packages/utils/containerd
+    git clone https://$github/sbwml/packages_utils_runc feeds/packages/utils/runc
     sed -i '/cgroupfs-mount/d' feeds/packages/utils/dockerd/Config.in
 sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
 pushd feeds/packages
@@ -355,10 +355,10 @@ sed -i 's/syslog/none/g' feeds/packages/admin/netdata/files/netdata.conf
 git clone https://$github/sbwml/luci-app-mosdns -b v5 package/new/mosdns
 
 # OpenAppFilter
-git clone https://$github/grandway2025/OpenAppFilter package/new/OpenAppFilter
+git clone https://$github/destan19/OpenAppFilter package/new/OpenAppFilter
 
 # adguardhome
-git clone https://$github/grandway2025/luci-app-adguardhome package/new/luci-app-adguardhome
+git clone https://$github/kenzok78/luci-app-adguardhome package/new/luci-app-adguardhome
 mkdir -p files/usr/bin
 AGH_CORE=$(curl -sL https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/latest | grep /AdGuardHome_linux_amd64 | awk -F '"' '{print $4}')
 wget -qO- $AGH_CORE | tar xOvz > files/usr/bin/AdGuardHome
@@ -402,7 +402,7 @@ git clone https://$github/gdy666/luci-app-lucky.git package/new/lucky
 git clone https://$github/grandway2025/openwrt-package package/new/openwrt-package
 
 # autocore-arm
-git clone https://$github/grandway2025/autocore-arm package/new/autocore-arm
+git clone https://$github/sbwml/autocore-arm package/new/autocore-arm
 
 sed -i 's/O2/O2 -march=x86-64-v2/g' include/target.mk
 
