@@ -212,12 +212,12 @@ curl -s $mirroropenwrt/patch/other/691-net-ipv6-fix-UDPv6-GSO-segmentation-with-
 
 # Docker
 rm -rf feeds/luci/applications/luci-app-dockerman
-git clone https://$github/sbwml/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
+git clone https://$github/grandway2025/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
     rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
-    git clone https://$github/sbwml/packages_utils_docker feeds/packages/utils/docker
-    git clone https://$github/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
-    git clone https://$github/sbwml/packages_utils_containerd feeds/packages/utils/containerd
-    git clone https://$github/sbwml/packages_utils_runc feeds/packages/utils/runc
+    git clone https://$github/grandway2025/packages_utils_docker feeds/packages/utils/docker
+    git clone https://$github/grandway2025/packages_utils_dockerd feeds/packages/utils/dockerd
+    git clone https://$github/grandway2025/packages_utils_containerd feeds/packages/utils/containerd
+    git clone https://$github/grandway2025/packages_utils_runc feeds/packages/utils/runc
     sed -i '/cgroupfs-mount/d' feeds/packages/utils/dockerd/Config.in
 sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
 pushd feeds/packages
