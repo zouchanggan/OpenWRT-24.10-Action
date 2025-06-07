@@ -14,6 +14,12 @@ on:
     # - cron: 0 17 * * *
   # watch:
   #   types: started
+     inputs:
+      lan_addr:
+        description: 'Setting default LAN address'
+        required: true
+        default: '192.168.1.10'
+        type: string 
 
 env:
   REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x-24.10
