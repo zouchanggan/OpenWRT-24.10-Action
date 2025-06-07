@@ -5,7 +5,7 @@
 # =====================
 
 # 脚本URL
-export mirror=https://script.kejizero.online
+# export mirror=https://script.kejizero.online
 
 ##
 echo -e "\nmsgid \"Control\"" >> feeds/luci/modules/luci-base/po/zh_Hans/base.po
