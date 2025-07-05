@@ -19,8 +19,18 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 # sed -i "s/hostname='.*'/hostname='OpenWrt'/g" package/base-files/files/bin/config_generate
 
 ##删除软件
-rm -rf ./package/feeds/extraipk/luci-app-turboacc
-rm -rf ./package/feeds/extraipk/luci-app-vssr
+rm -rf package/feeds/extraipk/luci-app-turboacc
+rm -rf package/feeds/extraipk/luci-app-vssr
+rm -rf package/feeds/extraipk/luci-app-passwall
+rm -rf package/feeds/extraipk/luci-app-passwall2
+rm -rf package/feeds/extraipk/luci-app-ssr-plus
+rm -rf package/feeds/extraipk/luci-app-vssr
+rm -rf package/feeds/extraipk/luci-app-appfilter
+rm -rf package/feeds/extraipk/luci-app-ddns-go
+rm -rf package/feeds/extraipk/luci-app-openclash
+rm -rf package/feeds/extraipk/luci-app-lucky
+rm -rf package/feeds/extraipk/luci-app-mosdns
+
 
 ##加入作者信息
 # sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWrt-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
