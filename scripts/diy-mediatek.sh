@@ -10,26 +10,18 @@
 ##配置IP
 sed -i "s/192.168.1.1/$LAN/g" package/base-files/files/bin/config_generate
 
-##取消bootstrap为默认主题
-sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
-
-##更改主机名
-# sed -i "s/hostname='.*'/hostname='OpenWrt'/g" package/base-files/files/bin/config_generate
-
 ##删除软件
-rm -rf package/feeds/extraipk/luci-app-turboacc
-rm -rf package/feeds/extraipk/luci-app-vssr
-rm -rf package/feeds/extraipk/luci-app-passwall
-rm -rf package/feeds/extraipk/luci-app-passwall2
-rm -rf package/feeds/extraipk/luci-app-ssr-plus
-rm -rf package/feeds/extraipk/luci-app-vssr
-rm -rf package/feeds/extraipk/luci-app-appfilter
-rm -rf package/feeds/extraipk/luci-app-ddns-go
-rm -rf package/feeds/extraipk/luci-app-openclash
-rm -rf package/feeds/extraipk/luci-app-lucky
-rm -rf package/feeds/extraipk/luci-app-mosdns
+rm -rf ./package/feeds/extraipk/luci-app-turboacc
+rm -rf ./package/feeds/extraipk/luci-app-vssr
+rm -rf ./package/feeds/extraipk/luci-app-passwall
+rm -rf ./package/feeds/extraipk/luci-app-passwall2
+rm -rf ./package/feeds/extraipk/luci-app-ssr-plus
+rm -rf ./package/feeds/extraipk/luci-app-vssr
+rm -rf ./package/feeds/extraipk/luci-app-appfilter
+rm -rf ./package/feeds/extraipk/luci-app-ddns-go
+rm -rf ./package/feeds/extraipk/luci-app-openclash
+rm -rf ./package/feeds/extraipk/luci-app-lucky
+rm -rf ./package/feeds/extraipk/luci-app-mosdns
 
 
 ##加入作者信息
@@ -78,6 +70,7 @@ rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-lucky
 rm -rf feeds/luci/applications/luci-app-mosdns
+rm -rf feeds/luci/applications/luci-app-turboacc
 
 #添加额外软件包
 # golang 1.24
