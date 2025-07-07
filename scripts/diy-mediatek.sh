@@ -4,9 +4,6 @@
 # 配置参数
 # =====================
 
-# 脚本URL
-# export mirror=https://script.kejizero.online
-
 ##配置IP
 sed -i "s/192.168.6.1/$LAN/g" package/base-files/files/bin/config_generate
 
@@ -71,7 +68,7 @@ rm -rf feeds/luci/applications/luci-app-alist
 #添加额外软件包
 # golang 1.24
 rm -rf feeds/packages/lang/golang
-git clone https://git.kejizero.online/zhao/packages_lang_golang -b 25.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
 
 # SSRP & Passwall
 rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
