@@ -8,7 +8,7 @@
 # export mirror=https://script.kejizero.online
 
 ##配置IP
-sed -i "s/192.168.1.1/$LAN/g" package/base-files/files/bin/config_generate
+sed -i "s/192.168.6.1/$LAN/g" package/base-files/files/bin/config_generate
 
 # 加入作者信息
 sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWrt-$(date +%Y%m%d)'/g"  package/base-files/files/etc/openwrt_release
